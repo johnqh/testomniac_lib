@@ -105,9 +105,7 @@ testomniac_app / testomniac_app_rn
 - `useRef` guards prevent duplicate fetches on mount; be careful not to break this guard when modifying the hook
 - This is a published npm package (`@sudobility/testomniac_lib`) -- coordinate breaking changes with testomniac_app and testomniac_app_rn
 
-## Testing
+## Testing Notes
 
-- Run tests: `bun test`
 - Tests are in `src/business/stores/historiesStore.test.ts`
 - Tests cover Zustand store operations (set, get, add, update, remove) and hook behavior
-- Uses Vitest as the test runner
