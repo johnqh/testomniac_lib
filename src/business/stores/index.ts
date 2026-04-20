@@ -1,2 +1,1 @@
-// No stores currently exported
-export {};
+export { useScanProgressStore } from './scanProgressStore';
