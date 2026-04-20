@@ -7,10 +7,7 @@ import type {
   Optional,
 } from '@sudobility/testomniac_types';
 import type { FirebaseIdToken } from '@sudobility/testomniac_client';
-import {
-  useHistories,
-  useHistoriesTotal,
-} from '@sudobility/testomniac_client';
+import { useHistories, useHistoriesTotal } from '@sudobility/testomniac_client';
 import { useHistoriesStore } from '../stores/historiesStore';
 import { calculatePercentage } from '../utils/calculations';
 
