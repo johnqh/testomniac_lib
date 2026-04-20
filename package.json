@@ -1,7 +1,7 @@
 {
   "name": "@sudobility/testomniac_lib",
-  "version": "0.0.19",
-  "description": "Business logic library for Starter with Zustand stores",
+  "version": "0.0.20",
+  "description": "Testomniac business logic library with Zustand stores",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -42,8 +42,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.38.0",
-    "@sudobility/testomniac_client": "^0.0.20",
-    "@sudobility/testomniac_types": "^0.0.18",
+    "@sudobility/testomniac_client": "^0.0.21",
+    "@sudobility/testomniac_types": "^0.0.19",
     "@sudobility/types": "^1.9.61",
     "@tanstack/react-query": "^5.90.5",
     "@testing-library/react": "^16.3.2",
