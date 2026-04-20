@@ -1,5 +1,2 @@
-export {
-  useHistoriesManager,
-  type UseHistoriesManagerConfig,
-  type UseHistoriesManagerReturn,
-} from './useHistoriesManager';
+// No hooks currently exported
+export {};
