@@ -23,11 +23,14 @@ src/
     ├── index.ts                          # Business layer exports
     ├── stores/
     │   ├── index.ts                      # Store exports
-    │   ├── historiesStore.ts             # Per-user Zustand cache store
-    │   └── historiesStore.test.ts
-    └── hooks/
-        ├── index.ts                      # Hook exports
-        └── useHistoriesManager.ts        # Unified business logic hook
+    │   └── scanProgressStore.ts          # Real-time scan progress state
+    ├── hooks/
+    │   ├── index.ts                      # Hook exports
+    │   ├── useScanManager.ts             # Scan submission + progress tracking
+    │   ├── useDashboardManager.ts        # Dashboard data orchestration
+    │   └── useRunManager.ts              # Individual run data management
+    └── utils/
+        └── index.ts                      # Business utility exports
 ```
 
 ## Commands
@@ -35,7 +38,7 @@ src/
 ```bash
 bun run build          # Build ESM
 bun run clean          # Remove dist/
-bun test               # Run Vitest tests (src/business/stores/historiesStore.test.ts)
+bun test               # Run Vitest tests
 bun run typecheck      # TypeScript check
 bun run lint           # Run ESLint
 bun run verify         # All checks + build (use before commit)
@@ -44,21 +47,36 @@ bun run prepublishOnly # Clean + build (runs on publish)
 
 ## Key Concepts
 
-### useHistoriesStore
+### scanProgressStore
 
-Zustand store providing per-user client-side cache with operations: `set`, `get`, `add`, `update`, `remove`. Keyed by user ID for multi-user support.
+Zustand store for real-time scan progress tracking. Holds SSE-streamed state updates (phase, counters, events) for the active scan.
 
-### useHistoriesManager
+### useScanManager
 
-Unified hook that combines entitytestomniac_client hooks + Zustand store + business logic:
+Orchestrates scan submission and real-time progress:
 
-- **Config**: `{ baseUrl, networkClient, userId, token, autoFetch? }`
-- **Percentage calculation**: `(userSum / globalTotal) * 100`
-- **Cache fallback**: returns cached data when server hasn't responded yet
-- **Auto-fetch**: fetches on mount when `autoFetch` is enabled (default)
-- **Token reactivity**: resets state when token changes
+- **Config**: `{ baseUrl, networkClient, token }`
+- Wraps `useSubmitScan` mutation from entitytestomniac_client
+- Manages SSE connection for scan progress updates
+- Updates `scanProgressStore` with live data
 
-This is the primary hook consumed by UI layers (entitytestomniac_app, entityentitytestomniac_app_rn).
+### useDashboardManager
+
+Dashboard-level data orchestration:
+
+- **Config**: `{ baseUrl, networkClient, entitySlug, token }`
+- Fetches projects and their runs for the current entity
+- Provides aggregated dashboard statistics
+
+### useRunManager
+
+Individual run data management:
+
+- **Config**: `{ baseUrl, networkClient, runId, token }`
+- Fetches run details, pages, test cases, issues, personas
+- Provides run-level statistics and navigation helpers
+
+These hooks are the primary integration point consumed by UI layers (entitytestomniac_app, entityentitytestomniac_app_rn).
 
 ## Peer Dependencies
 
@@ -83,24 +101,22 @@ entitytestomniac_app / entityentitytestomniac_app_rn
 
 - **entitytestomniac_types** — Shared type definitions; imported transitively via entitytestomniac_client
 - **entitytestomniac_client** — API client SDK; this library wraps its hooks with business logic and Zustand state
-- **entitytestomniac_app** — Web frontend that consumes `useHistoriesManager` from this library
-- **entityentitytestomniac_app_rn** — React Native app that consumes `useHistoriesManager` via file: links
+- **entitytestomniac_app** — Web frontend that consumes `useScanManager`, `useDashboardManager`, `useRunManager` from this library
+- **entityentitytestomniac_app_rn** — React Native app that consumes these hooks via file: links
 - **entitytestomniac_api** — Backend server; this library communicates with it indirectly through entitytestomniac_client
 
 ## Coding Patterns
 
-- `useHistoriesManager` is the primary hook -- it orchestrates entitytestomniac_client hooks + Zustand store into a single unified interface for UI layers
-- Zustand store (`useHistoriesStore`) is keyed by `userId` for per-user cache isolation
-- Percentage calculation: `(userSum / globalTotal) * 100` -- this is the core business metric
-- `isCached` flag indicates when the UI is showing stale cached data before the server responds
-- `autoFetch` (default: true) triggers data fetching on mount; use `autoFetch: false` for manual control
-- Token reactivity: changing the auth token resets the store state to prevent stale cross-user data
+- `useScanManager`, `useDashboardManager`, and `useRunManager` are the primary hooks -- they orchestrate entitytestomniac_client hooks + Zustand store into unified interfaces for UI layers
+- `scanProgressStore` holds real-time SSE-streamed scan state -- use it for live progress UI
+- Token reactivity: changing the auth token resets store state to prevent stale cross-user data
 - `useRef` is used to prevent duplicate fetch calls on React strict-mode double-mount
+- Hooks accept a config object with `{ baseUrl, networkClient, token }` plus entity-specific params
 
 ## Gotchas
 
 - Zustand store is in-memory only -- there is no persistence; data is lost on page refresh or app restart
-- Cache is isolated per `userId` -- switching users shows a fresh state (not another user's data)
+- `scanProgressStore` state is ephemeral -- only valid while SSE connection is active
 - Token change resets the entire store state -- this is intentional to prevent data leakage between users
-- `useRef` guards prevent duplicate fetches on mount; be careful not to break this guard when modifying the hook
+- `useRef` guards prevent duplicate fetches on mount; be careful not to break this guard when modifying hooks
 - This is a published npm package (`@sudobility/entitytestomniac_lib`) -- coordinate breaking changes with entitytestomniac_app and entityentitytestomniac_app_rn
