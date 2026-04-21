@@ -66,7 +66,8 @@ export const useScanProgressStore = create<ScanProgressState>(set => ({
             events,
             pageStatesFound: state.pageStatesFound + 1,
             latestScreenshotUrl:
-              (event.payload.screenshotUrl as string) ?? state.latestScreenshotUrl,
+              (event.payload.screenshotUrl as string) ??
+              state.latestScreenshotUrl,
           };
         case 'stats_update': {
           const p = event.payload;
@@ -75,8 +76,10 @@ export const useScanProgressStore = create<ScanProgressState>(set => ({
             events,
             pagesFound: (p.pages as number) ?? state.pagesFound,
             pageStatesFound: (p.pageStates as number) ?? state.pageStatesFound,
-            actionsCompleted: (p.actionsCompleted as number) ?? state.actionsCompleted,
-            actionsRemaining: (p.actionsRemaining as number) ?? state.actionsRemaining,
+            actionsCompleted:
+              (p.actionsCompleted as number) ?? state.actionsCompleted,
+            actionsRemaining:
+              (p.actionsRemaining as number) ?? state.actionsRemaining,
             issuesFound: (p.issues as number) ?? state.issuesFound,
             latestScreenshotUrl:
               (p.screenshotUrl as string) ?? state.latestScreenshotUrl,
