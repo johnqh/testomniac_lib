@@ -83,6 +83,8 @@ export const useScanProgressStore = create<ScanProgressState>(set => ({
             issuesFound: (p.issues as number) ?? state.issuesFound,
             latestScreenshotUrl:
               (p.screenshotUrl as string) ?? state.latestScreenshotUrl,
+            currentPageUrl:
+              (p.currentPageUrl as string) ?? state.currentPageUrl,
           };
         }
         case 'action_completed':
