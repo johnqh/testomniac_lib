@@ -99,14 +99,14 @@ export const useScanProgressStore = create<ScanProgressState>(set => ({
             events,
             issuesFound: state.issuesFound + 1,
           };
-        case 'run_completed':
+        case 'scan_completed':
           return {
             ...state,
             events,
             isComplete: true,
             phase: 'completed',
           };
-        case 'run_failed':
+        case 'scan_failed':
           return {
             ...state,
             events,
