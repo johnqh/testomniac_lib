@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { NetworkClient } from '@sudobility/types';
 import type {
-  IssueResponse,
   PageResponse,
   PersonaResponse,
-  RunDetailResponse,
+  ScanDetailResponse,
   TestCaseResponse,
   TestRunResponse,
 } from '@sudobility/testomniac_types';
@@ -22,11 +21,10 @@ interface UseRunManagerConfig {
 export function useRunManager(config: UseRunManagerConfig) {
   const { networkClient, baseUrl, runId, token, enabled = true } = config;
 
-  const [run, setRun] = useState<RunDetailResponse | null>(null);
+  const [run, setRun] = useState<ScanDetailResponse | null>(null);
   const [pages, setPages] = useState<PageResponse[]>([]);
   const [testCases, setTestCases] = useState<TestCaseResponse[]>([]);
   const [testRuns, setTestRuns] = useState<TestRunResponse[]>([]);
-  const [issues, setIssues] = useState<IssueResponse[]>([]);
   const [personas, setPersonas] = useState<PersonaResponse[]>([]);
   const [components, setComponents] = useState<unknown[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -46,7 +44,6 @@ export function useRunManager(config: UseRunManagerConfig) {
         pagesRes,
         testCasesRes,
         testRunsRes,
-        issuesRes,
         personasRes,
         componentsRes,
       ] = await Promise.all([
@@ -54,7 +51,6 @@ export function useRunManager(config: UseRunManagerConfig) {
         client.getRunPages(runId, token),
         client.getRunTestCases(runId, token),
         client.getRunTestRuns(runId, token),
-        client.getRunIssues(runId, token),
         client.getRunPersonas(runId, token),
         client.getRunComponents(runId, token),
       ]);
@@ -65,7 +61,6 @@ export function useRunManager(config: UseRunManagerConfig) {
         setTestCases(testCasesRes.data);
       if (testRunsRes.success && testRunsRes.data)
         setTestRuns(testRunsRes.data);
-      if (issuesRes.success && issuesRes.data) setIssues(issuesRes.data);
       if (personasRes.success && personasRes.data)
         setPersonas(personasRes.data);
       if (componentsRes.success && componentsRes.data)
@@ -90,7 +85,6 @@ export function useRunManager(config: UseRunManagerConfig) {
     pages,
     testCases,
     testRuns,
-    issues,
     personas,
     components,
     isLoading,
@@ -99,7 +93,6 @@ export function useRunManager(config: UseRunManagerConfig) {
       pages: pages.length,
       testCases: testCases.length,
       testRuns: testRuns.length,
-      issues: issues.length,
       personas: personas.length,
       components: components.length,
     },

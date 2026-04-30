@@ -3,12 +3,11 @@ import type { RunStreamEvent } from '@sudobility/testomniac_types';
 
 interface ScanProgressState {
   runId: number | null;
-  phase: string;
   pagesFound: number;
   pageStatesFound: number;
-  actionsCompleted: number;
-  actionsRemaining: number;
-  issuesFound: number;
+  testRunsCompleted: number;
+  findingsFound: number;
+  suitesCreated: number;
   latestScreenshotUrl: string | null;
   currentPageUrl: string | null;
   events: RunStreamEvent[];
@@ -24,12 +23,11 @@ interface ScanProgressState {
 
 const initialState = {
   runId: null as number | null,
-  phase: 'pending',
   pagesFound: 0,
   pageStatesFound: 0,
-  actionsCompleted: 0,
-  actionsRemaining: 0,
-  issuesFound: 0,
+  testRunsCompleted: 0,
+  findingsFound: 0,
+  suitesCreated: 0,
   latestScreenshotUrl: null as string | null,
   currentPageUrl: null as string | null,
   events: [] as RunStreamEvent[],
@@ -47,12 +45,6 @@ export const useScanProgressStore = create<ScanProgressState>(set => ({
       const events = [...state.events, event].slice(-100); // Keep last 100
 
       switch (event.type) {
-        case 'phase_changed':
-          return {
-            ...state,
-            events,
-            phase: event.payload.phase as string,
-          };
         case 'page_discovered':
           return {
             ...state,
@@ -76,42 +68,44 @@ export const useScanProgressStore = create<ScanProgressState>(set => ({
             events,
             pagesFound: (p.pages as number) ?? state.pagesFound,
             pageStatesFound: (p.pageStates as number) ?? state.pageStatesFound,
-            actionsCompleted:
-              (p.actionsCompleted as number) ?? state.actionsCompleted,
-            actionsRemaining:
-              (p.actionsRemaining as number) ?? state.actionsRemaining,
-            issuesFound: (p.issues as number) ?? state.issuesFound,
+            testRunsCompleted:
+              (p.testRunsCompleted as number) ?? state.testRunsCompleted,
+            findingsFound: (p.findingsFound as number) ?? state.findingsFound,
             latestScreenshotUrl:
               (p.screenshotUrl as string) ?? state.latestScreenshotUrl,
             currentPageUrl:
               (p.currentPageUrl as string) ?? state.currentPageUrl,
           };
         }
-        case 'action_completed':
+        case 'test_suite_created':
           return {
             ...state,
             events,
-            actionsCompleted: state.actionsCompleted + 1,
+            suitesCreated: state.suitesCreated + 1,
           };
-        case 'issue_detected':
+        case 'test_run_completed':
           return {
             ...state,
             events,
-            issuesFound: state.issuesFound + 1,
+            testRunsCompleted: state.testRunsCompleted + 1,
+          };
+        case 'finding_created':
+          return {
+            ...state,
+            events,
+            findingsFound: state.findingsFound + 1,
           };
         case 'scan_completed':
           return {
             ...state,
             events,
             isComplete: true,
-            phase: 'completed',
           };
         case 'scan_failed':
           return {
             ...state,
             events,
             isComplete: true,
-            phase: 'failed',
             error: event.payload.error as string,
           };
         default:
