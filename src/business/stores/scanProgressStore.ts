@@ -1,8 +1,8 @@
 import { create } from 'zustand';
-import type { RunStreamEvent } from '@sudobility/testomniac_types';
+import type { TestRunStreamEvent } from '@sudobility/testomniac_types';
 
 interface ScanProgressState {
-  runId: number | null;
+  testRunId: number | null;
   pagesFound: number;
   pageStatesFound: number;
   testRunsCompleted: number;
@@ -10,19 +10,19 @@ interface ScanProgressState {
   suitesCreated: number;
   latestScreenshotUrl: string | null;
   currentPageUrl: string | null;
-  events: RunStreamEvent[];
+  events: TestRunStreamEvent[];
   isComplete: boolean;
   error: string | null;
 
   // Actions
-  setRunId: (runId: number) => void;
-  handleEvent: (event: RunStreamEvent) => void;
+  setTestRunId: (testRunId: number) => void;
+  handleEvent: (event: TestRunStreamEvent) => void;
   reset: () => void;
   setError: (error: string | null) => void;
 }
 
 const initialState = {
-  runId: null as number | null,
+  testRunId: null as number | null,
   pagesFound: 0,
   pageStatesFound: 0,
   testRunsCompleted: 0,
@@ -30,7 +30,7 @@ const initialState = {
   suitesCreated: 0,
   latestScreenshotUrl: null as string | null,
   currentPageUrl: null as string | null,
-  events: [] as RunStreamEvent[],
+  events: [] as TestRunStreamEvent[],
   isComplete: false,
   error: null as string | null,
 };
@@ -38,11 +38,11 @@ const initialState = {
 export const useScanProgressStore = create<ScanProgressState>(set => ({
   ...initialState,
 
-  setRunId: runId => set({ runId }),
+  setTestRunId: testRunId => set({ testRunId }),
 
   handleEvent: event =>
     set(state => {
-      const events = [...state.events, event].slice(-100); // Keep last 100
+      const events = [...state.events, event].slice(-100);
 
       switch (event.type) {
         case 'page_discovered':
@@ -83,7 +83,7 @@ export const useScanProgressStore = create<ScanProgressState>(set => ({
             events,
             suitesCreated: state.suitesCreated + 1,
           };
-        case 'test_run_completed':
+        case 'child_run_completed':
           return {
             ...state,
             events,
@@ -95,13 +95,13 @@ export const useScanProgressStore = create<ScanProgressState>(set => ({
             events,
             findingsFound: state.findingsFound + 1,
           };
-        case 'scan_completed':
+        case 'run_completed':
           return {
             ...state,
             events,
             isComplete: true,
           };
-        case 'scan_failed':
+        case 'run_failed':
           return {
             ...state,
             events,

@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import type { NetworkClient } from '@sudobility/types';
-import type { CreateScanRequest } from '@sudobility/testomniac_types';
+import type { CreateDiscoveryRunRequest } from '@sudobility/testomniac_types';
 import { TestomniacClient } from '@sudobility/testomniac_client';
 import { useScanProgressStore } from '../stores/scanProgressStore';
 
@@ -21,14 +21,14 @@ export function useScanManager(config: UseScanManagerConfig) {
   );
 
   const startScan = useCallback(
-    async (data: CreateScanRequest) => {
+    async (data: CreateDiscoveryRunRequest) => {
       store.reset();
       setIsSubmitting(true);
       setSubmitError(null);
       try {
-        const response = await client.submitScan(data);
-        if (response.success && response.data?.runId) {
-          store.setRunId(response.data.runId);
+        const response = await client.submitDiscoveryRun(data);
+        if (response.success && response.data?.testRunId) {
+          store.setTestRunId(response.data.testRunId);
         }
         return response;
       } catch (err) {
@@ -47,7 +47,7 @@ export function useScanManager(config: UseScanManagerConfig) {
     startScan,
     isSubmitting,
     submitError,
-    runId: store.runId,
+    testRunId: store.testRunId,
     pagesFound: store.pagesFound,
     pageStatesFound: store.pageStatesFound,
     testRunsCompleted: store.testRunsCompleted,

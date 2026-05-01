@@ -3,7 +3,6 @@ import type { NetworkClient } from '@sudobility/types';
 import type {
   PageResponse,
   PersonaResponse,
-  ScanDetailResponse,
   TestCaseResponse,
   TestRunResponse,
 } from '@sudobility/testomniac_types';
@@ -21,7 +20,7 @@ interface UseRunManagerConfig {
 export function useRunManager(config: UseRunManagerConfig) {
   const { networkClient, baseUrl, runId, token, enabled = true } = config;
 
-  const [run, setRun] = useState<ScanDetailResponse | null>(null);
+  const [run, setRun] = useState<TestRunResponse | null>(null);
   const [pages, setPages] = useState<PageResponse[]>([]);
   const [testCases, setTestCases] = useState<TestCaseResponse[]>([]);
   const [testRuns, setTestRuns] = useState<TestRunResponse[]>([]);
@@ -47,10 +46,10 @@ export function useRunManager(config: UseRunManagerConfig) {
         personasRes,
         componentsRes,
       ] = await Promise.all([
-        client.getRun(runId, token),
+        client.getTestRun(runId, token),
         client.getRunPages(runId, token),
         client.getRunTestCases(runId, token),
-        client.getRunTestRuns(runId, token),
+        client.getTestRunChildRuns(runId, token),
         client.getRunPersonas(runId, token),
         client.getRunComponents(runId, token),
       ]);
