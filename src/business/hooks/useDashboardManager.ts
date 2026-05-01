@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { NetworkClient } from '@sudobility/types';
-import type { ProjectSummaryResponse } from '@sudobility/testomniac_types';
+import type { ProductSummaryResponse } from '@sudobility/testomniac_types';
 import type { FirebaseIdToken } from '@sudobility/testomniac_client';
 import { TestomniacClient } from '@sudobility/testomniac_client';
 
@@ -15,7 +15,7 @@ interface UseDashboardManagerConfig {
 export function useDashboardManager(config: UseDashboardManagerConfig) {
   const { networkClient, baseUrl, entitySlug, token, enabled = true } = config;
 
-  const [projects, setProjects] = useState<ProjectSummaryResponse[]>([]);
+  const [products, setProducts] = useState<ProductSummaryResponse[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
@@ -24,17 +24,17 @@ export function useDashboardManager(config: UseDashboardManagerConfig) {
     [networkClient, baseUrl]
   );
 
-  const fetchProjects = useCallback(async () => {
+  const fetchProducts = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await client.getEntityProjects(entitySlug, token);
+      const response = await client.getEntityProducts(entitySlug, token);
       if (response.success && response.data) {
-        setProjects(response.data);
+        setProducts(response.data);
       }
     } catch (err) {
       setError(
-        err instanceof Error ? err : new Error('Failed to fetch projects')
+        err instanceof Error ? err : new Error('Failed to fetch products')
       );
     } finally {
       setIsLoading(false);
@@ -43,14 +43,14 @@ export function useDashboardManager(config: UseDashboardManagerConfig) {
 
   useEffect(() => {
     if (enabled) {
-      void fetchProjects();
+      void fetchProducts();
     }
-  }, [enabled, fetchProjects]);
+  }, [enabled, fetchProducts]);
 
   return {
-    projects,
+    products,
     isLoading,
     error,
-    refetchProjects: fetchProjects,
+    refetchProducts: fetchProducts,
   };
 }
