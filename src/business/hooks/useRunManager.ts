@@ -25,7 +25,7 @@ export function useRunManager(config: UseRunManagerConfig) {
   const [testCases, setTestCases] = useState<TestCaseResponse[]>([]);
   const [testRuns, setTestRuns] = useState<TestRunResponse[]>([]);
   const [personas, setPersonas] = useState<PersonaResponse[]>([]);
-  const [components, setComponents] = useState<unknown[]>([]);
+  const [scaffolds, setScaffolds] = useState<unknown[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
@@ -44,14 +44,14 @@ export function useRunManager(config: UseRunManagerConfig) {
         testCasesRes,
         testRunsRes,
         personasRes,
-        componentsRes,
+        scaffoldsRes,
       ] = await Promise.all([
         client.getTestRun(runId, token),
         client.getRunPages(runId, token),
         client.getRunTestCases(runId, token),
         client.getTestRunChildRuns(runId, token),
         client.getRunPersonas(runId, token),
-        client.getRunComponents(runId, token),
+        client.getRunScaffolds(runId, token),
       ]);
 
       if (runRes.success && runRes.data) setRun(runRes.data);
@@ -62,8 +62,8 @@ export function useRunManager(config: UseRunManagerConfig) {
         setTestRuns(testRunsRes.data);
       if (personasRes.success && personasRes.data)
         setPersonas(personasRes.data);
-      if (componentsRes.success && componentsRes.data)
-        setComponents(componentsRes.data);
+      if (scaffoldsRes.success && scaffoldsRes.data)
+        setScaffolds(scaffoldsRes.data);
     } catch (err) {
       setError(
         err instanceof Error ? err : new Error('Failed to fetch run data')
@@ -85,7 +85,7 @@ export function useRunManager(config: UseRunManagerConfig) {
     testCases,
     testRuns,
     personas,
-    components,
+    scaffolds,
     isLoading,
     error,
     counts: {
@@ -93,7 +93,7 @@ export function useRunManager(config: UseRunManagerConfig) {
       testCases: testCases.length,
       testRuns: testRuns.length,
       personas: personas.length,
-      components: components.length,
+      scaffolds: scaffolds.length,
     },
   };
 }
