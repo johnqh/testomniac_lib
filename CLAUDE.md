@@ -73,7 +73,7 @@ Dashboard-level data orchestration:
 Individual run data management:
 
 - **Config**: `{ baseUrl, networkClient, runId, token }`
-- Fetches run details, pages, test cases, issues, personas
+- Fetches run details, pages, test elements, issues, personas
 - Provides run-level statistics and navigation helpers
 
 These hooks are the primary integration point consumed by UI layers (entitytestomniac_app, entityentitytestomniac_app_rn).
