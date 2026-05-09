@@ -52,7 +52,7 @@ export function useScanManager(config: UseScanManagerConfig) {
     pageStatesFound: store.pageStatesFound,
     testRunsCompleted: store.testRunsCompleted,
     findingsFound: store.findingsFound,
-    suitesCreated: store.suitesCreated,
+    surfacesCreated: store.surfacesCreated,
     latestScreenshotUrl: store.latestScreenshotUrl,
     currentPageUrl: store.currentPageUrl,
     events: store.events,

@@ -7,7 +7,7 @@ interface ScanProgressState {
   pageStatesFound: number;
   testRunsCompleted: number;
   findingsFound: number;
-  suitesCreated: number;
+  surfacesCreated: number;
   latestScreenshotUrl: string | null;
   currentPageUrl: string | null;
   events: TestRunStreamEvent[];
@@ -27,7 +27,7 @@ const initialState = {
   pageStatesFound: 0,
   testRunsCompleted: 0,
   findingsFound: 0,
-  suitesCreated: 0,
+  surfacesCreated: 0,
   latestScreenshotUrl: null as string | null,
   currentPageUrl: null as string | null,
   events: [] as TestRunStreamEvent[],
@@ -79,11 +79,11 @@ export const useScanProgressStore = create<ScanProgressState>(set => ({
               (p.currentPageUrl as string) ?? state.currentPageUrl,
           };
         }
-        case 'test_suite_created':
+        case 'test_surface_created':
           return {
             ...state,
             events,
-            suitesCreated: state.suitesCreated + 1,
+            surfacesCreated: state.surfacesCreated + 1,
           };
         case 'child_run_completed':
           return {
