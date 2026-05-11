@@ -108,7 +108,10 @@ export const useScanProgressStore = create<ScanProgressState>(set => ({
             ...state,
             events,
             isComplete: true,
-            error: event.payload.error as string,
+            error:
+              (event.payload.error as string) ??
+              (event.payload.status as string) ??
+              'Run failed',
           };
         default:
           return { ...state, events };
