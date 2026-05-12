@@ -3,7 +3,7 @@ import type { NetworkClient } from '@sudobility/types';
 import type {
   PageResponse,
   PersonaResponse,
-  TestElementResponse,
+  TestInteractionResponse,
   TestRunResponse,
 } from '@sudobility/testomniac_types';
 import type { FirebaseIdToken } from '@sudobility/testomniac_client';
@@ -22,7 +22,9 @@ export function useRunManager(config: UseRunManagerConfig) {
 
   const [run, setRun] = useState<TestRunResponse | null>(null);
   const [pages, setPages] = useState<PageResponse[]>([]);
-  const [testElements, setTestElements] = useState<TestElementResponse[]>([]);
+  const [testInteractions, setTestInteractions] = useState<
+    TestInteractionResponse[]
+  >([]);
   const [testRuns, setTestRuns] = useState<TestRunResponse[]>([]);
   const [personas, setPersonas] = useState<PersonaResponse[]>([]);
   const [scaffolds, setScaffolds] = useState<unknown[]>([]);
@@ -41,14 +43,14 @@ export function useRunManager(config: UseRunManagerConfig) {
       const [
         runRes,
         pagesRes,
-        testElementsRes,
+        testInteractionsRes,
         testRunsRes,
         personasRes,
         scaffoldsRes,
       ] = await Promise.all([
         client.getTestRun(runId, token),
         client.getRunPages(runId, token),
-        client.getRunTestElements(runId, token),
+        client.getRunTestInteractions(runId, token),
         client.getTestRunChildRuns(runId, token),
         client.getRunPersonas(runId, token),
         client.getRunScaffolds(runId, token),
@@ -56,8 +58,8 @@ export function useRunManager(config: UseRunManagerConfig) {
 
       if (runRes.success && runRes.data) setRun(runRes.data);
       if (pagesRes.success && pagesRes.data) setPages(pagesRes.data);
-      if (testElementsRes.success && testElementsRes.data)
-        setTestElements(testElementsRes.data);
+      if (testInteractionsRes.success && testInteractionsRes.data)
+        setTestInteractions(testInteractionsRes.data);
       if (testRunsRes.success && testRunsRes.data)
         setTestRuns(testRunsRes.data);
       if (personasRes.success && personasRes.data)
@@ -82,7 +84,7 @@ export function useRunManager(config: UseRunManagerConfig) {
   return {
     run,
     pages,
-    testElements,
+    testInteractions,
     testRuns,
     personas,
     scaffolds,
@@ -90,7 +92,7 @@ export function useRunManager(config: UseRunManagerConfig) {
     error,
     counts: {
       pages: pages.length,
-      testElements: testElements.length,
+      testInteractions: testInteractions.length,
       testRuns: testRuns.length,
       personas: personas.length,
       scaffolds: scaffolds.length,

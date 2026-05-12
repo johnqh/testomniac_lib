@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import type {
   PageResponse,
-  TestElementResponse,
+  TestInteractionResponse,
 } from '@sudobility/testomniac_types';
 
 export interface PageMapNode {
@@ -9,30 +9,33 @@ export interface PageMapNode {
   relativePath: string;
   routeKey: string | null;
   isExternal: boolean;
-  testElementCount: number;
+  testInteractionCount: number;
 }
 
 export interface PageMapEdge {
   id: string;
   sourcePageId: number | null;
   targetPageId: number | null;
-  testElementId: number;
+  testInteractionId: number;
   testType: string;
   title: string;
 }
 
 export interface UsePageMapDataConfig {
   pages: PageResponse[];
-  testElements: TestElementResponse[];
+  testInteractions: TestInteractionResponse[];
 }
 
 const MAP_TEST_TYPES = new Set(['navigation', 'interaction']);
 
-export function usePageMapData({ pages, testElements }: UsePageMapDataConfig) {
+export function usePageMapData({
+  pages,
+  testInteractions,
+}: UsePageMapDataConfig) {
   return useMemo(() => {
     // Filter to navigation and interaction types only,
     // exclude self-referencing elements, and require a targetPageId
-    const filtered = testElements.filter(
+    const filtered = testInteractions.filter(
       el =>
         MAP_TEST_TYPES.has(el.testType) &&
         el.targetPageId != null &&
@@ -56,7 +59,7 @@ export function usePageMapData({ pages, testElements }: UsePageMapDataConfig) {
       relativePath: page.relativePath,
       routeKey: page.routeKey,
       isExternal: page.relativePath.startsWith('http'),
-      testElementCount: countMap.get(page.id) ?? 0,
+      testInteractionCount: countMap.get(page.id) ?? 0,
     }));
 
     // Build edges from filtered test elements
@@ -64,11 +67,11 @@ export function usePageMapData({ pages, testElements }: UsePageMapDataConfig) {
       id: String(el.id),
       sourcePageId: el.testType === 'navigation' ? null : el.pageId,
       targetPageId: el.targetPageId,
-      testElementId: el.id,
+      testInteractionId: el.id,
       testType: el.testType,
       title: el.title,
     }));
 
     return { nodes, edges };
-  }, [pages, testElements]);
+  }, [pages, testInteractions]);
 }
