@@ -8,3 +8,7 @@ export type {
   UsePageMapDataConfig,
 } from './usePageMapData';
 export { useEnvironmentManager } from './useEnvironmentManager';
+export { useFindingsAnalysis } from './useFindingsAnalysis';
+export type { FindingsAnalysis } from './useFindingsAnalysis';
+export { useTestRunsAnalysis } from './useTestRunsAnalysis';
+export type { StatusCounts, TestRunsAnalysis } from './useTestRunsAnalysis';
