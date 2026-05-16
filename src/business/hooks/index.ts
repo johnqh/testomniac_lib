@@ -12,3 +12,5 @@ export { useFindingsAnalysis } from './useFindingsAnalysis';
 export type { FindingsAnalysis } from './useFindingsAnalysis';
 export { useTestRunsAnalysis } from './useTestRunsAnalysis';
 export type { StatusCounts, TestRunsAnalysis } from './useTestRunsAnalysis';
+export { usePageInteractionGroups } from './usePageInteractionGroups';
+export type { PageInteractionGroups } from './usePageInteractionGroups';
