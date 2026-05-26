@@ -1,3 +1,6 @@
+export { useEntityManager } from './useEntityManager';
+export { usePersistedState } from './usePersistedState';
+export type { StorageAdapter } from './usePersistedState';
 export { useScanManager } from './useScanManager';
 export { useDashboardManager } from './useDashboardManager';
 export { useRunManager } from './useRunManager';
