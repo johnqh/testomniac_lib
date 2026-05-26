@@ -17,3 +17,4 @@ export { useTestRunsAnalysis } from './useTestRunsAnalysis';
 export type { StatusCounts, TestRunsAnalysis } from './useTestRunsAnalysis';
 export { usePageInteractionGroups } from './usePageInteractionGroups';
 export type { PageInteractionGroups } from './usePageInteractionGroups';
+export { useSequenceGenerator } from './useSequenceGenerator';
