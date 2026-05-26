@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import type { NetworkClient } from '@sudobility/types';
 import type { FirebaseIdToken } from '@sudobility/testomniac_client';
-import { useEntities } from '@sudobility/testomniac_client';
+import { QUERY_KEYS, useEntities } from '@sudobility/testomniac_client';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface UseEntityManagerConfig {
   networkClient: NetworkClient;
@@ -18,6 +19,7 @@ interface UseEntityManagerConfig {
  */
 export function useEntityManager(config: UseEntityManagerConfig) {
   const { networkClient, baseUrl, token, enabled = true } = config;
+  const queryClient = useQueryClient();
 
   const { entities, isLoading, error, refetch } = useEntities({
     networkClient,
@@ -28,6 +30,17 @@ export function useEntityManager(config: UseEntityManagerConfig) {
 
   // Retry once if entities come back empty (workspace may still be creating)
   const retried = useRef(false);
+
+  // Invalidate cached entities when token changes (different user session)
+  // so we never serve stale data from a previous login.
+  const prevToken = useRef(token);
+  useEffect(() => {
+    if (token !== prevToken.current) {
+      prevToken.current = token;
+      retried.current = false;
+      queryClient.removeQueries({ queryKey: QUERY_KEYS.entities() });
+    }
+  }, [token, queryClient]);
   useEffect(() => {
     if (isLoading || !enabled || retried.current) return undefined;
     if (entities.length === 0 && !error) {
@@ -39,11 +52,6 @@ export function useEntityManager(config: UseEntityManagerConfig) {
     }
     return undefined;
   }, [entities.length, isLoading, enabled, error, refetch]);
-
-  // Reset retry flag when token changes (new login session)
-  useEffect(() => {
-    retried.current = false;
-  }, [token]);
 
   return {
     entities,
