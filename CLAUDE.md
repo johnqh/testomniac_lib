@@ -2,7 +2,7 @@
 
 Business logic library with Zustand stores for the Testomniac application.
 
-**npm**: `@sudobility/entitytestomniac_lib` (restricted, BUSL-1.1)
+**npm**: `@sudobility/testomniac_lib` (restricted, BUSL-1.1)
 
 ## Tech Stack
 
@@ -23,20 +23,38 @@ src/
     ├── index.ts                          # Business layer exports
     ├── stores/
     │   ├── index.ts                      # Store exports
-    │   └── scanProgressStore.ts          # Real-time scan progress state
+    │   └── scanProgressStore.ts          # Real-time scan progress state (Zustand)
     ├── hooks/
     │   ├── index.ts                      # Hook exports
-    │   ├── useScanManager.ts             # Scan submission + progress tracking
+    │   ├── useScanManager.ts             # Scan submission + SSE progress tracking
     │   ├── useDashboardManager.ts        # Dashboard data orchestration
-    │   └── useRunManager.ts              # Individual run data management
+    │   ├── useRunManager.ts              # Run data management (details, pages, personas)
+    │   ├── useEntityManager.ts           # Entity fetching with auto-retry
+    │   ├── useEnvironmentManager.ts      # Environment pages/interactions/surfaces
+    │   ├── useFindingsAnalysis.ts        # Findings analysis by priority/type
+    │   ├── usePageMapData.ts             # Graph nodes/edges from pages & interactions
+    │   ├── usePageInteractionGroups.ts   # Group interactions relative to a page
+    │   ├── useTestRunsAnalysis.ts        # Test run status counts
+    │   ├── useSequenceGenerator.ts       # Test sequence generation
+    │   ├── usePersistedState.ts          # Platform-agnostic persisted state hook
+    │   └── __tests__/
+    │       └── usePersistedState.test.ts # Persisted state tests
     └── utils/
-        └── index.ts                      # Business utility exports
+        ├── index.ts                      # Utility exports
+        ├── formatDuration.ts             # Convert ms → "1h 5m", "2m 15s"
+        ├── formatDate.ts                 # ISO date → locale string
+        ├── formatMultilineLog.ts         # Trim multiline strings
+        ├── parseExpertiseTitle.ts        # Extract [tag] from finding titles
+        ├── validateEmailDomain.ts        # Email domain vs URL domain matching
+        ├── pathUtils.ts                  # Normalize & patternize URLs
+        └── scheduleUtils.ts             # Schedule descriptions & constants
 ```
 
 ## Commands
 
 ```bash
-bun run build          # Build ESM
+bun run build          # Build ESM (tsc → dist/)
+bun run build:watch    # Watch mode build
 bun run clean          # Remove dist/
 bun test               # Run Vitest tests
 bun run typecheck      # TypeScript check
@@ -56,7 +74,7 @@ Zustand store for real-time scan progress tracking. Holds SSE-streamed state upd
 Orchestrates scan submission and real-time progress:
 
 - **Config**: `{ baseUrl, networkClient, token }`
-- Wraps `useSubmitScan` mutation from entitytestomniac_client
+- Wraps `useSubmitScan` mutation from testomniac_client
 - Manages SSE connection for scan progress updates
 - Updates `scanProgressStore` with live data
 
@@ -65,7 +83,7 @@ Orchestrates scan submission and real-time progress:
 Dashboard-level data orchestration:
 
 - **Config**: `{ baseUrl, networkClient, entitySlug, token }`
-- Fetches projects and their runs for the current entity
+- Fetches products and their runs for the current entity
 - Provides aggregated dashboard statistics
 
 ### useRunManager
@@ -76,7 +94,15 @@ Individual run data management:
 - Fetches run details, pages, test elements, issues, personas
 - Provides run-level statistics and navigation helpers
 
-These hooks are the primary integration point consumed by UI layers (entitytestomniac_app, entityentitytestomniac_app_rn).
+### usePersistedState
+
+Platform-agnostic persisted state hook. Abstracts localStorage (web), chrome.storage (extension), or AsyncStorage (React Native) without changing UI code.
+
+### Analysis Hooks
+
+- `useFindingsAnalysis` — group/count findings by priority and expertise type
+- `useTestRunsAnalysis` — count test runs by status (passed, failed, pending)
+- `usePageMapData` — build graph visualization data from pages and interactions
 
 ## Peer Dependencies
 
@@ -88,35 +114,35 @@ These hooks are the primary integration point consumed by UI layers (entitytesto
 ## Architecture
 
 ```
-entitytestomniac_app / entityentitytestomniac_app_rn
+testomniac_app / testomniac_app_rn
     ↓ uses
-@sudobility/entitytestomniac_lib (this package)
+@sudobility/testomniac_lib (this package)
     ↓ uses
-@sudobility/entitytestomniac_client (API hooks)
+@sudobility/testomniac_client (API hooks)
     ↓ uses
-@sudobility/entitytestomniac_types (type definitions)
+@sudobility/testomniac_types (type definitions)
 ```
 
 ## Related Projects
 
-- **entitytestomniac_types** — Shared type definitions; imported transitively via entitytestomniac_client
-- **entitytestomniac_client** — API client SDK; this library wraps its hooks with business logic and Zustand state
-- **entitytestomniac_app** — Web frontend that consumes `useScanManager`, `useDashboardManager`, `useRunManager` from this library
-- **entityentitytestomniac_app_rn** — React Native app that consumes these hooks via file: links
-- **entitytestomniac_api** — Backend server; this library communicates with it indirectly through entitytestomniac_client
+- **testomniac_types** — Shared type definitions; imported transitively via testomniac_client
+- **testomniac_client** — API client SDK; this library wraps its hooks with business logic and Zustand state
+- **testomniac_app** — Web frontend that consumes hooks from this library
+- **testomniac_api** — Backend server; this library communicates with it indirectly through testomniac_client
 
 ## Coding Patterns
 
-- `useScanManager`, `useDashboardManager`, and `useRunManager` are the primary hooks -- they orchestrate entitytestomniac_client hooks + Zustand store into unified interfaces for UI layers
-- `scanProgressStore` holds real-time SSE-streamed scan state -- use it for live progress UI
+- `useScanManager`, `useDashboardManager`, and `useRunManager` are the primary hooks — they orchestrate testomniac_client hooks + Zustand store into unified interfaces for UI layers
+- `scanProgressStore` holds real-time SSE-streamed scan state — use it for live progress UI
 - Token reactivity: changing the auth token resets store state to prevent stale cross-user data
 - `useRef` is used to prevent duplicate fetch calls on React strict-mode double-mount
 - Hooks accept a config object with `{ baseUrl, networkClient, token }` plus entity-specific params
+- All hooks support `enabled` parameter (default `true`) to conditionally skip data fetching
 
 ## Gotchas
 
-- Zustand store is in-memory only -- there is no persistence; data is lost on page refresh or app restart
-- `scanProgressStore` state is ephemeral -- only valid while SSE connection is active
-- Token change resets the entire store state -- this is intentional to prevent data leakage between users
+- Zustand store is in-memory only — there is no persistence; data is lost on page refresh or app restart
+- `scanProgressStore` state is ephemeral — only valid while SSE connection is active
+- Token change resets the entire store state — this is intentional to prevent data leakage between users
 - `useRef` guards prevent duplicate fetches on mount; be careful not to break this guard when modifying hooks
-- This is a published npm package (`@sudobility/entitytestomniac_lib`) -- coordinate breaking changes with entitytestomniac_app and entityentitytestomniac_app_rn
+- This is a published npm package — coordinate breaking changes with testomniac_app
