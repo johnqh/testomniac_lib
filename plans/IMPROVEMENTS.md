@@ -1,4 +1,4 @@
-# Improvement Plans for @sudobility/starter_lib
+# Improvement Plans for @sudobility/testomniac_lib
 
 ## Priority 1 - High Impact
 
@@ -6,7 +6,7 @@
 
 - Added comprehensive test suite in `src/business/hooks/useHistoriesManager.test.ts` (35 tests)
 - Tests cover: basic data flow, cache fallback logic, percentage calculation (including division-by-zero), loading state aggregation, error handling priority, mutation wrappers (success + failure), autoFetch behavior, and refresh function
-- Mocks `@sudobility/starter_client` hooks to isolate business logic testing
+- Mocks `@sudobility/testomniac_client` hooks to isolate business logic testing
 - Added `@testing-library/react`, `react-dom`, and `jsdom` as dev dependencies for React hook testing
 - Created `vitest.config.ts` with jsdom environment and `vitest.setup.ts` for React act() support
 
@@ -37,7 +37,7 @@
 - `createHistory`, `updateHistory`, and `deleteHistory` now throw an `Error` when `response.success` is `false`
 - Error message is extracted from `response.error` or falls back to a descriptive default (e.g., `'Failed to create history'`)
 - Consumer apps can now catch mutation failures in try/catch blocks for proper UI feedback
-- Existing consumer code in `starter_app_rn` already uses try/catch around mutations, so this is backwards-compatible
+- Existing consumer code in `testomniac_app_rn` already uses try/catch around mutations, so this is backwards-compatible
 - Added test coverage for error throwing on each mutation type
 
 ### 4. Decouple Store Updates from Hook-Level Side Effects -- COMPLETED

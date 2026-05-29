@@ -1,11 +1,11 @@
-# @sudobility/starter_lib
+# @sudobility/testomniac_lib
 
 Business logic library with Zustand stores for the Starter application.
 
 ## Installation
 
 ```bash
-bun add @sudobility/starter_lib
+bun add @sudobility/testomniac_lib
 ```
 
 Peer dependencies:
@@ -17,7 +17,7 @@ bun add react @tanstack/react-query zustand @sudobility/types
 ## Usage
 
 ```ts
-import { useHistoriesManager } from "@sudobility/starter_lib";
+import { useHistoriesManager } from '@sudobility/testomniac_lib';
 
 // In a React component:
 const {
@@ -29,9 +29,9 @@ const {
   updateHistory,
   deleteHistory,
 } = useHistoriesManager({
-  baseUrl: "https://api.example.com",
+  baseUrl: 'https://api.example.com',
   networkClient,
-  userId: "firebase-uid",
+  userId: 'firebase-uid',
   token: firebaseIdToken,
   autoFetch: true, // default
 });
@@ -41,7 +41,7 @@ const {
 
 ### useHistoriesManager
 
-Unified hook that combines starter_client hooks + Zustand store + business logic:
+Unified hook that combines testomniac_client hooks + Zustand store + business logic:
 
 - Percentage calculation: `(userSum / globalTotal) * 100`
 - Cache fallback: returns cached data while server hasn't responded
@@ -65,11 +65,11 @@ bun run verify         # All checks + build (use before commit)
 
 ## Related Packages
 
-- **starter_types** -- Shared type definitions (imported transitively via starter_client)
-- **starter_client** -- API client SDK; this library wraps its hooks with business logic
-- **starter_app** -- Web frontend that consumes `useHistoriesManager`
-- **starter_app_rn** -- React Native app that consumes `useHistoriesManager`
-- **starter_api** -- Backend server (communicated with indirectly through starter_client)
+- **testomniac_types** -- Shared type definitions (imported transitively via testomniac_client)
+- **testomniac_client** -- API client SDK; this library wraps its hooks with business logic
+- **testomniac_app** -- Web frontend that consumes `useHistoriesManager`
+- **testomniac_app_rn** -- React Native app that consumes `useHistoriesManager`
+- **testomniac_api** -- Backend server (communicated with indirectly through testomniac_client)
 
 ## License
 
