@@ -4,6 +4,7 @@ export { formatMultilineLog } from './formatMultilineLog';
 export { parseExpertiseTitle } from './parseExpertiseTitle';
 export { validateEmailDomain } from './validateEmailDomain';
 export { normalizePath, patternizePath } from './pathUtils';
+export { describeInteraction } from './describeInteraction';
 export {
   RECURRENCE_OPTIONS,
   DAY_OPTIONS,
