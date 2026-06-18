@@ -17,3 +17,11 @@ export {
   describeScheduleTarget,
   describeRecurrence,
 } from './scheduleUtils';
+export {
+  PRIORITY_LEVELS,
+  PRIORITY_NAMES,
+  priorityShortLabel,
+  priorityLabel,
+  getSurfacePriorityBand,
+  type SurfacePriorityBand,
+} from './priority';
