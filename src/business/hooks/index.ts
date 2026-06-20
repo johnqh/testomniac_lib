@@ -12,3 +12,10 @@ export { useTestRunsAnalysis } from './useTestRunsAnalysis';
 export type { StatusCounts, TestRunsAnalysis } from './useTestRunsAnalysis';
 export { usePageInteractionGroups } from './usePageInteractionGroups';
 export type { PageInteractionGroups } from './usePageInteractionGroups';
+export { useCreateProductFlow } from './useCreateProductFlow';
+export type {
+  StartProductScanParams,
+  StartProductScanResult,
+  UseCreateProductFlowConfig,
+  UseCreateProductFlow,
+} from './useCreateProductFlow';

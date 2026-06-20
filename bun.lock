@@ -9,8 +9,10 @@
       },
       "devDependencies": {
         "@eslint/js": "^9.38.0",
+        "@sudobility/testomniac_client": "^0.0.102",
         "@sudobility/testomniac_types": "^0.0.77",
         "@sudobility/types": "^1.9.62",
+        "@tanstack/react-query": "^5.90.5",
         "@testing-library/react": "^16.3.2",
         "@testing-library/react-hooks": "^8.0.1",
         "@types/dagre": "^0.7.54",
@@ -31,7 +33,10 @@
         "zustand": "^5.0.8",
       },
       "peerDependencies": {
+        "@sudobility/testomniac_client": "^0.0.102",
+        "@sudobility/testomniac_types": "^0.0.77",
         "@sudobility/types": "^1.9.62",
+        "@tanstack/react-query": ">=5.0.0",
         "react": ">=18.0.0",
         "zustand": ">=5.0.0",
       },
@@ -202,9 +207,15 @@
 
     "@standard-schema/spec": ["@standard-schema/spec@1.1.0", "", {}, "sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w=="],
 
+    "@sudobility/testomniac_client": ["@sudobility/testomniac_client@0.0.102", "", { "peerDependencies": { "@sudobility/types": "^1.9.62", "@tanstack/react-query": ">=5.0.0", "react": ">=18.0.0" } }, "sha512-sUIv8y9ENEpt1r2/dWoCt4xUyaichoeWUaVcxtuP0V9JALgSB3NwIou1XQUrhFvAZGrKhzypwA0Ev3FLzBW06Q=="],
+
     "@sudobility/testomniac_types": ["@sudobility/testomniac_types@0.0.77", "", { "peerDependencies": { "@sudobility/types": "^1.9.62" } }, "sha512-Jj+caqdxsl9NvzNK5IF/WtmTQQhM2On+z5bOIdNm1OjnzEqWwvxoDRUQGsxEXC2Ymo1nfoJdc1wxNJCWcUSSdA=="],
 
     "@sudobility/types": ["@sudobility/types@1.9.62", "", {}, "sha512-GOkz5oE7Fmlolba2aemBF2fKPtH4I2lHAjVta+fqZAoAV72DQaWYzVEjTwKZs/ACY/g9Z262IDa7lEh+IOrn7w=="],
+
+    "@tanstack/query-core": ["@tanstack/query-core@5.101.0", "", {}, "sha512-cQetA74EB+seWySv1TTKr828TnP0u39m6LykwDXIo84SNortpDkp30TMEjkqtYCNP9c40uT/iwl6MLiufEt0Ow=="],
+
+    "@tanstack/react-query": ["@tanstack/react-query@5.101.0", "", { "dependencies": { "@tanstack/query-core": "5.101.0" }, "peerDependencies": { "react": "^18 || ^19" } }, "sha512-rLlJXSpkqfizLWgkR5+eLeIk0MvTx/meEIR7LRjxic+qxiQP8zVjq7BqQkiCMNLQBlLfuOLqqr6KO5GtrDlmSg=="],
 
     "@testing-library/dom": ["@testing-library/dom@10.4.1", "", { "dependencies": { "@babel/code-frame": "^7.10.4", "@babel/runtime": "^7.12.5", "@types/aria-query": "^5.0.1", "aria-query": "5.3.0", "dom-accessibility-api": "^0.5.9", "lz-string": "^1.5.0", "picocolors": "1.1.1", "pretty-format": "^27.0.2" } }, "sha512-o4PXJQidqJl82ckFaXUeoAW+XysPLauYI43Abki5hABd853iMhitooc6znOnczgbTYmEP6U6/y1ZyKAIsvMKGg=="],
 

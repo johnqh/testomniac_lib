@@ -25,3 +25,22 @@ export {
   getSurfacePriorityBand,
   type SurfacePriorityBand,
 } from './priority';
+export {
+  EXPERTISE_OPTIONS,
+  DEFAULT_EXPERTISE_SLUGS,
+  SCAN_MODE_OPTIONS,
+  isScanMode,
+  type ExpertiseOption,
+  type ScanMode,
+  type ScanModeOption,
+} from './scanConfig';
+export {
+  LOCAL_ENV_HOSTS,
+  environmentOptions,
+  getUrlEnvironmentInfo,
+  resolveEnvironmentContext,
+  type EnvironmentChoice,
+  type EnvironmentOption,
+  type UrlEnvironmentInfo,
+  type EnvironmentContext,
+} from './environment';
