@@ -9,8 +9,8 @@
       },
       "devDependencies": {
         "@eslint/js": "^9.38.0",
-        "@sudobility/testomniac_client": "^0.0.102",
-        "@sudobility/testomniac_types": "^0.0.77",
+        "@sudobility/testomniac_client": "^0.0.103",
+        "@sudobility/testomniac_types": "^0.0.78",
         "@sudobility/types": "^1.9.62",
         "@tanstack/react-query": "^5.90.5",
         "@testing-library/react": "^16.3.2",
@@ -33,8 +33,8 @@
         "zustand": "^5.0.8",
       },
       "peerDependencies": {
-        "@sudobility/testomniac_client": "^0.0.102",
-        "@sudobility/testomniac_types": "^0.0.77",
+        "@sudobility/testomniac_client": "^0.0.103",
+        "@sudobility/testomniac_types": "^0.0.78",
         "@sudobility/types": "^1.9.62",
         "@tanstack/react-query": ">=5.0.0",
         "react": ">=18.0.0",
@@ -207,9 +207,9 @@
 
     "@standard-schema/spec": ["@standard-schema/spec@1.1.0", "", {}, "sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w=="],
 
-    "@sudobility/testomniac_client": ["@sudobility/testomniac_client@0.0.102", "", { "peerDependencies": { "@sudobility/types": "^1.9.62", "@tanstack/react-query": ">=5.0.0", "react": ">=18.0.0" } }, "sha512-sUIv8y9ENEpt1r2/dWoCt4xUyaichoeWUaVcxtuP0V9JALgSB3NwIou1XQUrhFvAZGrKhzypwA0Ev3FLzBW06Q=="],
+    "@sudobility/testomniac_client": ["@sudobility/testomniac_client@0.0.103", "", { "peerDependencies": { "@sudobility/types": "^1.9.62", "@tanstack/react-query": ">=5.0.0", "react": ">=18.0.0" } }, "sha512-+T2GY8+7onjbLboyn0jk61vKaJpaOoL+LCVibar5m7xfSjfii015/hQuzAhhzm7mpLfydMo6LMUkSPO8woy3oA=="],
 
-    "@sudobility/testomniac_types": ["@sudobility/testomniac_types@0.0.77", "", { "peerDependencies": { "@sudobility/types": "^1.9.62" } }, "sha512-Jj+caqdxsl9NvzNK5IF/WtmTQQhM2On+z5bOIdNm1OjnzEqWwvxoDRUQGsxEXC2Ymo1nfoJdc1wxNJCWcUSSdA=="],
+    "@sudobility/testomniac_types": ["@sudobility/testomniac_types@0.0.78", "", { "peerDependencies": { "@sudobility/types": "^1.9.62" } }, "sha512-LMmuSEvrl16v49mRWMwjqSOisc6dwoghZcswaiyj5wRdzT2FHGLIgwl25LvYILaJrWpBy/VOdkOjlBbU/ea2qg=="],
 
     "@sudobility/types": ["@sudobility/types@1.9.62", "", {}, "sha512-GOkz5oE7Fmlolba2aemBF2fKPtH4I2lHAjVta+fqZAoAV72DQaWYzVEjTwKZs/ACY/g9Z262IDa7lEh+IOrn7w=="],
 
