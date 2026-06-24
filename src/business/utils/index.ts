@@ -2,6 +2,12 @@ export { formatDuration, formatDurationFromTimestamps } from './formatDuration';
 export { formatDate } from './formatDate';
 export { formatMultilineLog } from './formatMultilineLog';
 export { parseExpertiseTitle } from './parseExpertiseTitle';
+export {
+  getFindingDisplayTitle,
+  getFindingExpertiseSlug,
+  getFindingRuleKey,
+  groupFindingsByRule,
+} from './findingIdentity';
 export { validateEmailDomain } from './validateEmailDomain';
 export { normalizePath, patternizePath } from './pathUtils';
 export { describeInteraction } from './describeInteraction';
