@@ -5,6 +5,7 @@ export { parseExpertiseTitle } from './parseExpertiseTitle';
 export {
   getFindingDisplayTitle,
   getFindingExpertiseSlug,
+  getFindingRemediation,
   getFindingRuleKey,
   groupFindingsByRule,
 } from './findingIdentity';

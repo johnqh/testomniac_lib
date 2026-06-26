@@ -6,6 +6,7 @@ import {
 import {
   getFindingDisplayTitle,
   getFindingExpertiseSlug,
+  getFindingRemediation,
   getFindingRuleKey,
   groupFindingsByRule,
 } from './findingIdentity';
@@ -18,6 +19,7 @@ function finding(
     testRunId: 10,
     path: '/checkout',
     expertiseRuleId: null,
+    expertiseId: null,
     ruleId: null,
     type: 'warning',
     priority: 2,
@@ -54,6 +56,20 @@ describe('findingIdentity', () => {
     });
 
     expect(getFindingExpertiseSlug(item)).toBe('seo');
+  });
+
+  it('uses the persisted expertise ID before legacy fallbacks', () => {
+    expect(
+      getFindingExpertiseSlug(
+        finding({ expertiseId: 'accessibility', title: '[seo] Missing label' })
+      )
+    ).toBe('accessibility');
+  });
+
+  it('uses catalog metadata for a stable rule', () => {
+    const item = finding({ ruleId: ExpertiseRuleId.SeoTitlePresent });
+    expect(getFindingDisplayTitle(item)).toBe('Title: Present');
+    expect(getFindingRemediation(item)).toContain('title');
   });
 
   it('falls back to bracketed expertise for legacy findings', () => {

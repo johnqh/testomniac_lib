@@ -1,4 +1,7 @@
-import type { TestRunFindingResponse } from '@sudobility/testomniac_types';
+import {
+  getExpertiseRuleDefinition,
+  type TestRunFindingResponse,
+} from '@sudobility/testomniac_types';
 import { parseExpertiseTitle } from './parseExpertiseTitle';
 
 function legacyFindingTitle(finding: TestRunFindingResponse): string {
@@ -24,9 +27,12 @@ export function getFindingRuleKey(finding: TestRunFindingResponse): string {
 export function getFindingExpertiseSlug(
   finding: TestRunFindingResponse
 ): string | null {
+  if (finding.expertiseId) {
+    return finding.expertiseId;
+  }
+
   if (finding.ruleId) {
-    const [slug] = finding.ruleId.split('.');
-    return slug || null;
+    return getExpertiseRuleDefinition(finding.ruleId)?.expertiseId ?? null;
   }
 
   return parseExpertiseTitle(finding.title).tag;
@@ -35,7 +41,22 @@ export function getFindingExpertiseSlug(
 export function getFindingDisplayTitle(
   finding: TestRunFindingResponse
 ): string {
+  if (finding.ruleId) {
+    return (
+      getExpertiseRuleDefinition(finding.ruleId)?.label ??
+      legacyFindingTitle(finding)
+    );
+  }
+
   return legacyFindingTitle(finding);
+}
+
+export function getFindingRemediation(
+  finding: TestRunFindingResponse
+): string | null {
+  return finding.ruleId
+    ? (getExpertiseRuleDefinition(finding.ruleId)?.remediation ?? null)
+    : null;
 }
 
 export function groupFindingsByRule(
