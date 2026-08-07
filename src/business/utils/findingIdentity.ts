@@ -2,7 +2,7 @@ import {
   getExpertiseRuleDefinition,
   type TestRunFindingResponse,
 } from '@sudobility/testomniac_types';
-import { parseExpertiseTitle } from './parseExpertiseTitle';
+import { parseExpertiseTitle } from './parseExpertiseTitle.js';
 
 function legacyFindingTitle(finding: TestRunFindingResponse): string {
   return (

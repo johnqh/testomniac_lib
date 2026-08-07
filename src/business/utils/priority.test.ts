@@ -4,7 +4,7 @@ import {
   getSurfacePriorityBand,
   priorityLabel,
   priorityShortLabel,
-} from './priority';
+} from './priority.js';
 
 describe('priority labels', () => {
   it('derives full labels matching the legacy "P{n} - Name" format', () => {

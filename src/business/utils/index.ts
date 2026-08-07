@@ -1,29 +1,32 @@
-export { formatDuration, formatDurationFromTimestamps } from './formatDuration';
-export { formatDate } from './formatDate';
-export { formatMultilineLog } from './formatMultilineLog';
-export { parseExpertiseTitle } from './parseExpertiseTitle';
+export {
+  formatDuration,
+  formatDurationFromTimestamps,
+} from './formatDuration.js';
+export { formatDate } from './formatDate.js';
+export { formatMultilineLog } from './formatMultilineLog.js';
+export { parseExpertiseTitle } from './parseExpertiseTitle.js';
 export {
   getFindingDisplayTitle,
   getFindingExpertiseSlug,
   getFindingRemediation,
   getFindingRuleKey,
   groupFindingsByRule,
-} from './findingIdentity';
-export { validateEmailDomain } from './validateEmailDomain';
-export { normalizePath, patternizePath } from './pathUtils';
-export { describeInteraction } from './describeInteraction';
+} from './findingIdentity.js';
+export { validateEmailDomain } from './validateEmailDomain.js';
+export { normalizePath, patternizePath } from './pathUtils.js';
+export { describeInteraction } from './describeInteraction.js';
 export {
   layoutDagreGraph,
   type DagreGraphNode,
   type DagreGraphEdge,
   type DagreLayoutOptions,
-} from './graphLayout';
+} from './graphLayout.js';
 export {
   RECURRENCE_OPTIONS,
   DAY_OPTIONS,
   describeScheduleTarget,
   describeRecurrence,
-} from './scheduleUtils';
+} from './scheduleUtils.js';
 export {
   PRIORITY_LEVELS,
   PRIORITY_NAMES,
@@ -31,7 +34,7 @@ export {
   priorityLabel,
   getSurfacePriorityBand,
   type SurfacePriorityBand,
-} from './priority';
+} from './priority.js';
 export {
   EXPERTISE_OPTIONS,
   DEFAULT_EXPERTISE_SLUGS,
@@ -40,7 +43,7 @@ export {
   type ExpertiseOption,
   type ScanMode,
   type ScanModeOption,
-} from './scanConfig';
+} from './scanConfig.js';
 export {
   LOCAL_ENV_HOSTS,
   environmentOptions,
@@ -50,4 +53,4 @@ export {
   type EnvironmentOption,
   type UrlEnvironmentInfo,
   type EnvironmentContext,
-} from './environment';
+} from './environment.js';

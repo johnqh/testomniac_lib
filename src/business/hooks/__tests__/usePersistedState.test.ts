@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
-import { usePersistedState } from '../usePersistedState';
-import type { StorageAdapter } from '../usePersistedState';
+import { usePersistedState } from '../usePersistedState.js';
+import type { StorageAdapter } from '../usePersistedState.js';
 
 function createMockStorage(
   initial: Record<string, string> = {}

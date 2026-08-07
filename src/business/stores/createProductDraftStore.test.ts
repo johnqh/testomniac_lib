@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { useCreateProductDraftStore } from './createProductDraftStore';
+import { useCreateProductDraftStore } from './createProductDraftStore.js';
 
 describe('useCreateProductDraftStore', () => {
   beforeEach(() => {

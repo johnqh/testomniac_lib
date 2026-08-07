@@ -1,21 +1,21 @@
-export { usePersistedState } from './usePersistedState';
-export type { StorageAdapter } from './usePersistedState';
-export { usePageMapData } from './usePageMapData';
+export { usePersistedState } from './usePersistedState.js';
+export type { StorageAdapter } from './usePersistedState.js';
+export { usePageMapData } from './usePageMapData.js';
 export type {
   PageMapNode,
   PageMapEdge,
   UsePageMapDataConfig,
-} from './usePageMapData';
-export { useFindingsAnalysis } from './useFindingsAnalysis';
-export type { FindingsAnalysis } from './useFindingsAnalysis';
-export { useTestRunsAnalysis } from './useTestRunsAnalysis';
-export type { StatusCounts, TestRunsAnalysis } from './useTestRunsAnalysis';
-export { usePageInteractionGroups } from './usePageInteractionGroups';
-export type { PageInteractionGroups } from './usePageInteractionGroups';
-export { useCreateProductFlow } from './useCreateProductFlow';
+} from './usePageMapData.js';
+export { useFindingsAnalysis } from './useFindingsAnalysis.js';
+export type { FindingsAnalysis } from './useFindingsAnalysis.js';
+export { useTestRunsAnalysis } from './useTestRunsAnalysis.js';
+export type { StatusCounts, TestRunsAnalysis } from './useTestRunsAnalysis.js';
+export { usePageInteractionGroups } from './usePageInteractionGroups.js';
+export type { PageInteractionGroups } from './usePageInteractionGroups.js';
+export { useCreateProductFlow } from './useCreateProductFlow.js';
 export type {
   StartProductScanParams,
   StartProductScanResult,
   UseCreateProductFlowConfig,
   UseCreateProductFlow,
-} from './useCreateProductFlow';
+} from './useCreateProductFlow.js';

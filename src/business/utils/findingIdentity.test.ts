@@ -9,7 +9,7 @@ import {
   getFindingRemediation,
   getFindingRuleKey,
   groupFindingsByRule,
-} from './findingIdentity';
+} from './findingIdentity.js';
 
 function finding(
   overrides: Partial<TestRunFindingResponse>

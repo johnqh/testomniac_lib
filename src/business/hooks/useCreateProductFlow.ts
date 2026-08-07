@@ -11,7 +11,7 @@ import {
   useSubmitScan,
   useUpdateEnvironmentUserData,
 } from '@sudobility/testomniac_client';
-import type { ScanMode } from '../utils/scanConfig';
+import type { ScanMode } from '../utils/scanConfig.js';
 
 export interface StartProductScanParams {
   /** Target URL to scan (also used to derive the product title + origin). */
